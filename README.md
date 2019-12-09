@@ -70,7 +70,7 @@ export function sampleFunction(x: string): string {
 
 I also add a simple `jest` test. I prefer to keep my tests in a completely separate
 location, so I'll put all my tests in `__tests__`. So I create the following test case
-in `__tests__/base.spec.ts`:
+in `__tests__/program.spec.ts`:
 
 ```typescript
 import { sampleFunction } from "../src";
@@ -113,7 +113,7 @@ I then add the following scripts to `package.json`:
 At this point, if I run `yarn test`, I get exactly what I was hoping for:
 
 ```
- PASS  __tests__/base.spec.ts
+ PASS  __tests__/program.spec.ts
   This is a simple test
     ✓ Check the sampleFunction function (3ms)
 
@@ -185,7 +185,7 @@ describe("Simple expression tests", () => {
 So far so good. But note that if I actually run these tests, I get these results:
 
 ```
- PASS  __tests__/base.spec.ts
+ PASS  __tests__/program.spec.ts
   Simple expression tests
     ✓ Check literal value (4ms)
     ✓ Check addition
@@ -215,7 +215,7 @@ Note the lack of code coverage. Adding a few more test cases along with some
 ignore, we get to:
 
 ```
- PASS  __tests__/base.spec.ts
+ PASS  __tests__/program.spec.ts
   Simple expression tests
     ✓ Check literal value (3ms)
     ✓ Check addition
@@ -262,7 +262,7 @@ Now, if we change a test to make it fail, we get something like this:
       23 | });
       24 |
 
-      at Object.<anonymous> (__tests__/base.spec.ts:21:32)
+      at Object.<anonymous> (__tests__/program.spec.ts:21:32)
 
 Test Suites: 1 failed, 1 total
 Tests:       1 failed, 4 passed, 5 total
@@ -361,7 +361,7 @@ a `.vscode/launch.json` file that looks like this:
 ```
 
 I was pleasantly surprised to find that I could not only run my tests and get code coverage
-as usual, but also set breakpoints in both the tests (_i.e.,_ in `__tests__/base.spec.ts`)
+as usual, but also set breakpoints in both the tests (_i.e.,_ in `__tests__/program.spec.ts`)
 as well as in the code (_e.g.,_ `src/core/functions.ts`) and the debugger will find them.
 
 Note that I tested all this on Node 8.x. I've seen issues with debugging using Node 6.x so
