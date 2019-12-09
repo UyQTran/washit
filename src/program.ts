@@ -3,7 +3,7 @@ export interface ProgramOptions {
     durationMinutes: number;
 }
 
-class Program {
+export default class Program {
     private _options: ProgramOptions;
 
     constructor(options: ProgramOptions) {
@@ -18,5 +18,3 @@ class Program {
         this._options = value;
     }
 }
-
-export default Program;

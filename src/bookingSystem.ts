@@ -11,7 +11,7 @@ export interface BookingMap {
 const MINUTES = 'minutes';
 const TIME_MINUTE_FRAGMENT = 30;
 
-class WashIt {
+export default class BookingSystem {
     private _bookingQueue: BookingQueue;
     private _bookingMap: BookingMap;
 
@@ -81,13 +81,7 @@ class WashIt {
         }
     }
 
-    get bookingQueue(): BookingQueue {
-        return this._bookingQueue;
-    }
-
     get bookingMap(): BookingMap {
         return this._bookingMap;
     }
 }
-
-export default WashIt;

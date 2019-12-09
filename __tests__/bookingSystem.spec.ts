@@ -1,12 +1,12 @@
 import Program from "../src/program";
-import WashIt from "../src/washit";
+import BookingSystem from "../src/bookingSystem";
 import Booking from "../src/booking";
 import moment = require("moment");
 import {timeFormat} from "../src/util/timeFormat";
 
-describe("Tests for WashIt class", () => {
+describe("Tests for BookingSystem class", () => {
     test("Should be able add booking", () => {
-        const washit = new WashIt();
+        const washit = new BookingSystem();
         const program  = new Program({degreesCelsius: 30, durationMinutes: 20});
         const date = moment('12.12.12');
         const booking = new Booking(program, date);
@@ -17,7 +17,7 @@ describe("Tests for WashIt class", () => {
     });
 
     test("Should get waiting queue index", () => {
-        const washit = new WashIt();
+        const washit = new BookingSystem();
         const program  = new Program({degreesCelsius: 30, durationMinutes: 20});
         const date = moment('12.12.12-10:30', timeFormat);
         const booking = new Booking(program, date);
@@ -29,7 +29,7 @@ describe("Tests for WashIt class", () => {
     });
 
     test("Should still put in waiting list when not fully overlapped", () => {
-        const washit = new WashIt();
+        const washit = new BookingSystem();
         const program  = new Program({degreesCelsius: 30, durationMinutes: 20});
         const date = moment('12.12.12-10:30', timeFormat);
         const date1 = moment('12.12.12-10:40', timeFormat);
@@ -44,7 +44,7 @@ describe("Tests for WashIt class", () => {
     });
 
     test("Should be able to cancel booking", () => {
-        const washit = new WashIt();
+        const washit = new BookingSystem();
         const program  = new Program({degreesCelsius: 30, durationMinutes: 20});
         const date = moment('12.12.12-10:30', timeFormat);
         const booking = new Booking(program, date);
@@ -57,7 +57,7 @@ describe("Tests for WashIt class", () => {
     });
 
     test("Should be able shift queue if queue is present and booking is canceled", () => {
-        const washit = new WashIt();
+        const washit = new BookingSystem();
         const program  = new Program({degreesCelsius: 30, durationMinutes: 20});
 
         const date = moment('12.12.12-10:30', timeFormat);
