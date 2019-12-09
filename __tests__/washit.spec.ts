@@ -12,8 +12,8 @@ describe("Tests for WashIt class", () => {
         const booking = new Booking(program, date);
         washit.addBooking(booking);
 
-        const expectedBookingListLength = 1;
-        expect(Object.keys(washit.bookingMap).length).toEqual(expectedBookingListLength);
+        const expectedBookingMapSize = 1;
+        expect(Object.keys(washit.bookingMap).length).toEqual(expectedBookingMapSize);
     });
 
     test("Should get waiting queue index", () => {
@@ -56,7 +56,7 @@ describe("Tests for WashIt class", () => {
         expect(Object.keys(washit.bookingMap).length).toEqual(expectedBookingListLength);
     });
 
-    test("Should be able pop queue if queue is present and booking is canceled", () => {
+    test("Should be able shift queue if queue is present and booking is canceled", () => {
         const washit = new WashIt();
         const program  = new Program({degreesCelsius: 30, durationMinutes: 20});
 
@@ -70,7 +70,7 @@ describe("Tests for WashIt class", () => {
         const bookingId = booking.id;
         washit.cancelBooking(bookingId);
 
-        const expectedBookingListLength = 0;
+        const expectedBookingListLength = 1;
         expect(Object.keys(washit.bookingMap).length).toEqual(expectedBookingListLength);
     });
 });

@@ -32,6 +32,30 @@ class WashIt {
         return overlappingBookingCount;
     }
 
+    getBookingQueueIndex(booking: Booking, index: number) {
+        return moment(booking.date).add(index, MINUTES).toLocaleString();
+    }
+
+    cancelBooking(bookingId: string) {
+        const bookingToDelete = this._bookingMap[bookingId];
+        if(!bookingToDelete) {
+            return false;
+        }
+
+        delete this._bookingMap[bookingId];
+        this.deleteBookingFromQueue(bookingToDelete);
+
+        const bookingToReplaceDeletedBooking = this._bookingQueue[bookingToDelete.date.toLocaleString()].shift();
+
+        if(bookingToReplaceDeletedBooking) {
+            this._bookingMap[bookingToReplaceDeletedBooking.id] = bookingToReplaceDeletedBooking;
+            this.deleteBookingFromQueue(bookingToReplaceDeletedBooking);
+
+        }
+
+        return true;
+    }
+
     private handleAddBooking(bookingToAdd: Booking) {
         for(let i = 0; i <= bookingToAdd.program.options.durationMinutes; i+= TIME_MINUTE_FRAGMENT) {
             this._bookingQueue[this.getBookingQueueIndex(bookingToAdd, i)] = [bookingToAdd];
@@ -51,19 +75,10 @@ class WashIt {
         return highestOverlappingBookingCount;
     }
 
-    getBookingQueueIndex(booking: Booking, index: number) {
-        return moment(booking.date).add(index, MINUTES).toLocaleString();
-    }
-
-    cancelBooking(bookingId: string) {
-        const bookingToDelete = this._bookingMap[bookingId];
-        if(!bookingToDelete) {
-            return false;
+    private deleteBookingFromQueue(bookingToDelete: Booking) {
+        for(let i = 0; i < bookingToDelete.program.options.durationMinutes; i+=TIME_MINUTE_FRAGMENT) {
+            this._bookingQueue[this.getBookingQueueIndex(bookingToDelete, i)].shift();
         }
-        const bookingToDeleteId = bookingToDelete.id;
-        delete this._bookingMap[bookingId];
-
-        return true;
     }
 
     get bookingQueue(): BookingQueue {
