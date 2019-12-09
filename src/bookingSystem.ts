@@ -1,5 +1,6 @@
 import Booking from "./booking";
-import moment = require("moment");
+import moment from "moment";
+import {sendBookingNotification} from "./emailer";
 
 export interface BookingQueue {
     [key: string]: Booking[];
@@ -49,8 +50,7 @@ export default class BookingSystem {
 
         if(bookingToReplaceDeletedBooking) {
             this._bookingMap[bookingToReplaceDeletedBooking.id] = bookingToReplaceDeletedBooking;
-            this.deleteBookingFromQueue(bookingToReplaceDeletedBooking);
-
+            sendBookingNotification(bookingToReplaceDeletedBooking);
         }
 
         return true;
@@ -58,7 +58,11 @@ export default class BookingSystem {
 
     private handleAddBooking(bookingToAdd: Booking) {
         for(let i = 0; i <= bookingToAdd.program.options.durationMinutes; i+= TIME_MINUTE_FRAGMENT) {
-            this._bookingQueue[this.getBookingQueueIndex(bookingToAdd, i)] = [bookingToAdd];
+            if(this._bookingQueue[this.getBookingQueueIndex(bookingToAdd, i)]) {
+                this._bookingQueue[this.getBookingQueueIndex(bookingToAdd, i)].push(bookingToAdd);
+            } else {
+                this._bookingQueue[this.getBookingQueueIndex(bookingToAdd, i)] = [bookingToAdd];
+            }
         }
     }
 

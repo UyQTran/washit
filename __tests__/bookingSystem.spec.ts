@@ -12,7 +12,7 @@ describe("Tests for BookingSystem class", () => {
         washIt = new BookingSystem();
     });
 
-    test("Should be able add booking", () => {
+    it("Should be able add booking", () => {
         const date = moment('12.12.12');
         const user = new User('heidi@gmail.com');
         const booking = new Booking(program, date, user);
@@ -22,7 +22,7 @@ describe("Tests for BookingSystem class", () => {
         expect(Object.keys(washIt.bookingMap).length).toEqual(expectedBookingMapSize);
     });
 
-    test("Should get waiting queue index", () => {
+    it("Should get waiting queue index", () => {
         const date = moment('12.12.12-10:30', timeFormat);
         const user = new User('heidi@gmail.com');
         const booking = new Booking(program, date, user);
@@ -33,7 +33,7 @@ describe("Tests for BookingSystem class", () => {
         expect(queueIndex).toEqual(expectedBookingQueueIndex);
     });
 
-    test("Should still put in waiting list when not fully overlapped", () => {
+    it("Should still put in waiting list when not fully overlapped", () => {
         const date = moment('12.12.12-10:30', timeFormat);
         const date1 = moment('12.12.12-10:40', timeFormat);
         const user = new User('heidi@gmail.com');
@@ -48,7 +48,7 @@ describe("Tests for BookingSystem class", () => {
         expect(queueIndex).toEqual(expectedBookingQueueIndex);
     });
 
-    test("Should be able to cancel booking", () => {
+    it("Should be able to cancel booking", () => {
         const date = moment('12.12.12-10:30', timeFormat);
         const user = new User('heidi@gmail.com');
         const booking = new Booking(program, date, user);
@@ -60,13 +60,13 @@ describe("Tests for BookingSystem class", () => {
         expect(Object.keys(washIt.bookingMap).length).toEqual(expectedBookingListLength);
     });
 
-    test("Should be able shift queue if queue is present and booking is canceled", () => {
+    it("Should be able shift queue if queue is present and booking is canceled", () => {
         const date = moment('12.12.12-10:30', timeFormat);
         const user = new User('heidi@gmail.com');
         const booking = new Booking(program, date, user);
         washIt.addBooking(booking);
 
-        const date1 = moment('12.12.12-10:40', timeFormat);
+        const date1 = moment('12.12.12-10:30', timeFormat);
         const user1 = new User('hans@gmail.com');
         const booking1 = new Booking(program, date1, user1);
         washIt.addBooking(booking1);
