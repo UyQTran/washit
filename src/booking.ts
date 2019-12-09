@@ -1,13 +1,16 @@
 import Program from "./program";
-import moment = require("moment");
+import moment from "moment";
+import uuid from 'uuid-random';
 
 class Booking {
     private _program: Program;
     private _date: moment.Moment;
+    private _id: string;
 
     constructor(program: Program, date: moment.Moment) {
         this._program = program;
         this._date = date;
+        this._id = uuid()
     }
 
     get program(): Program {
@@ -26,6 +29,9 @@ class Booking {
         this._date = value;
     }
 
+    get id(): string {
+        return this._id;
+    }
 }
 
 export default Booking;

@@ -13,8 +13,9 @@ describe("Tests for WashIt class", () => {
         washit.addBooking(booking);
 
         const expectedBookingListLength = 1;
-        expect(washit.bookingList.length).toEqual(expectedBookingListLength);
+        expect(Object.keys(washit.bookingMap).length).toEqual(expectedBookingListLength);
     });
+
     test("Should get waiting queue index", () => {
         const washit = new WashIt();
         const program  = new Program({degreesCelsius: 30, durationMinutes: 20});
@@ -26,6 +27,7 @@ describe("Tests for WashIt class", () => {
         const expectedBookingQueueIndex = 1;
         expect(queueIndex).toEqual(expectedBookingQueueIndex);
     });
+
     test("Should still put in waiting list when not fully overlapped", () => {
         const washit = new WashIt();
         const program  = new Program({degreesCelsius: 30, durationMinutes: 20});
@@ -39,5 +41,36 @@ describe("Tests for WashIt class", () => {
 
         const expectedBookingQueueIndex = 1;
         expect(queueIndex).toEqual(expectedBookingQueueIndex);
+    });
+
+    test("Should be able to cancel booking", () => {
+        const washit = new WashIt();
+        const program  = new Program({degreesCelsius: 30, durationMinutes: 20});
+        const date = moment('12.12.12-10:30', timeFormat);
+        const booking = new Booking(program, date);
+        washit.addBooking(booking);
+        const bookingId = booking.id;
+        washit.cancelBooking(bookingId);
+
+        const expectedBookingListLength = 0;
+        expect(Object.keys(washit.bookingMap).length).toEqual(expectedBookingListLength);
+    });
+
+    test("Should be able pop queue if queue is present and booking is canceled", () => {
+        const washit = new WashIt();
+        const program  = new Program({degreesCelsius: 30, durationMinutes: 20});
+
+        const date = moment('12.12.12-10:30', timeFormat);
+        const booking = new Booking(program, date);
+        washit.addBooking(booking);
+
+        const date1 = moment('12.12.12-10:40', timeFormat);
+        const booking1 = new Booking(program, date1);
+        washit.addBooking(booking1);
+        const bookingId = booking.id;
+        washit.cancelBooking(bookingId);
+
+        const expectedBookingListLength = 0;
+        expect(Object.keys(washit.bookingMap).length).toEqual(expectedBookingListLength);
     });
 });
