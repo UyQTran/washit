@@ -3,13 +3,15 @@ import BookingSystem from "../src/bookingSystem";
 import Booking from "../src/booking";
 import moment = require("moment");
 import {timeFormat} from "../src/util/timeFormat";
+import User from "../src/user";
 
 describe("Tests for BookingSystem class", () => {
     test("Should be able add booking", () => {
         const washit = new BookingSystem();
         const program  = new Program({degreesCelsius: 30, durationMinutes: 20});
         const date = moment('12.12.12');
-        const booking = new Booking(program, date);
+        const user = new User('Heidi');
+        const booking = new Booking(program, date, user);
         washit.addBooking(booking);
 
         const expectedBookingMapSize = 1;
@@ -20,7 +22,8 @@ describe("Tests for BookingSystem class", () => {
         const washit = new BookingSystem();
         const program  = new Program({degreesCelsius: 30, durationMinutes: 20});
         const date = moment('12.12.12-10:30', timeFormat);
-        const booking = new Booking(program, date);
+        const user = new User('Heidi');
+        const booking = new Booking(program, date, user);
         washit.addBooking(booking);
         const queueIndex = washit.addBooking(booking);
 
@@ -33,8 +36,10 @@ describe("Tests for BookingSystem class", () => {
         const program  = new Program({degreesCelsius: 30, durationMinutes: 20});
         const date = moment('12.12.12-10:30', timeFormat);
         const date1 = moment('12.12.12-10:40', timeFormat);
-        const booking = new Booking(program, date);
-        const booking1 = new Booking(program, date1);
+        const user = new User('Heidi');
+        const booking = new Booking(program, date, user);
+        const user1 = new User('Hans');
+        const booking1 = new Booking(program, date1, user1);
         washit.addBooking(booking);
         washit.addBooking(booking1);
         const queueIndex = washit.addBooking(booking);
@@ -47,7 +52,8 @@ describe("Tests for BookingSystem class", () => {
         const washit = new BookingSystem();
         const program  = new Program({degreesCelsius: 30, durationMinutes: 20});
         const date = moment('12.12.12-10:30', timeFormat);
-        const booking = new Booking(program, date);
+        const user = new User('Heidi');
+        const booking = new Booking(program, date, user);
         washit.addBooking(booking);
         const bookingId = booking.id;
         washit.cancelBooking(bookingId);
@@ -61,11 +67,13 @@ describe("Tests for BookingSystem class", () => {
         const program  = new Program({degreesCelsius: 30, durationMinutes: 20});
 
         const date = moment('12.12.12-10:30', timeFormat);
-        const booking = new Booking(program, date);
+        const user = new User('Heidi');
+        const booking = new Booking(program, date, user);
         washit.addBooking(booking);
 
         const date1 = moment('12.12.12-10:40', timeFormat);
-        const booking1 = new Booking(program, date1);
+        const user1 = new User('Hans');
+        const booking1 = new Booking(program, date1, user1);
         washit.addBooking(booking1);
         const bookingId = booking.id;
         washit.cancelBooking(bookingId);
