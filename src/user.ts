@@ -1,20 +1,20 @@
 import uuid from 'uuid-random';
 
 export default class User {
-    private _name: string;
+    private _email: string;
     private _id: string;
 
-    constructor(name: string) {
-        this._name = name;
+    constructor(email: string) {
+        this._email = email;
         this._id = uuid();
     }
 
-    get name(): string {
-        return this._name;
+    get email(): string {
+        return this._email;
     }
 
-    set name(value: string) {
-        this._name = value;
+    set email(value: string) {
+        this._email = value;
     }
 
     get id(): string {
