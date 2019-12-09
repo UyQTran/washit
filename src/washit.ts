@@ -1,10 +1,5 @@
 import Booking from "./booking";
 
-export interface ProgramOptions {
-    degreesCelsius: number;
-    durationMinutes: number;
-}
-
 class WashIt {
     private _bookingList: Booking[];
 
@@ -12,9 +7,20 @@ class WashIt {
         this._bookingList = [];
     }
 
-    addBooking(booking: Booking) {
+    addBooking(bookingToAdd: Booking) {
+        const MINUTES = 'minutes';
+        const filterOverlappingBookings = (booking: Booking) => {
+            let isBookingToAddAfterCurrent = bookingToAdd.date.isAfter(booking.date.add(booking.program.options.durationMinutes, MINUTES));
+            let isBookingToAddBeforeCurrent = bookingToAdd.date.isBefore(booking.date);
+            return !(isBookingToAddAfterCurrent || isBookingToAddBeforeCurrent);
+        };
+        const overlappingBookingCount = this.bookingList.filter(filterOverlappingBookings).length;
 
-        this._bookingList.push(booking);
+        if(overlappingBookingCount) {
+        } else {
+            this._bookingList.push(bookingToAdd);
+        }
+        return overlappingBookingCount;
     }
 
     get bookingList(): Booking[] {
